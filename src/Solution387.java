@@ -2,9 +2,10 @@
  * Created by upupgogogo on 2018/7/19.下午5:29
  */
 public class Solution387 {
-
+     
     public int firstUniqChar(String s) {
         int nums[] = new int[26];
+
         for (int i = 0; i < s.length(); i++)
             nums[s.charAt(i) - 'a']++;
 
@@ -13,5 +14,9 @@ public class Solution387 {
                 return i;
         return -1;
 
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new Solution113().hashCode());
     }
 }
