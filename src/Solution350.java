@@ -1,61 +1,38 @@
 import com.sun.source.tree.BinaryTree;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by upupgogogo on 2018/7/7.下午7:31
  */
 public class Solution350 {
 
-    public static int[] intersect(int[] nums1, int[] nums2) {
-        List<Integer> res = new ArrayList();
-        List list = new ArrayList();
-        for (int num : nums1)
-            list.add(num);
-        for (int num : nums2){
-            if (list.contains(num)){
-                res.add(num);
-                list.remove(new Integer(num));
+    public int[] intersect(int[] nums1, int[] nums2) {
+        Map<Integer, Integer> map = new TreeMap<>();
+        for (int i = 0; i < nums1.length; i ++) {
+            if (map.containsKey(nums1[i])) {
+                map.put(nums1[i], map.get(nums1[i]) + 1);
+            }
+            else
+                map.put(nums1[i], 1);
+        }
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < nums2.length; i ++){
+            if (map.containsKey(nums2[i])){
+                if (map.get(nums2[i]) == 1){
+                    list.add(nums2[i]);
+                     map.remove(nums2[i]);
+                }
+                else{
+                    list.add(nums2[i]);
+                    map.put(nums2[i],map.get(nums2[i]) - 1);
+                }
             }
         }
-        int[] arrayRes = new int[res.size()];
-        for (int i = 0; i < res.size(); i++){
-            arrayRes[i] = res.get(i);
-        }
-        return arrayRes;
+        int[] res = new int[list.size()];
+        for (int i = 0; i < res.length; i ++)
+            res[i] = list.get(i);
+        return res;
     }
 
-    public int[] intersect2(int[] nums1, int[] nums2) {
-        Map<Integer,Integer> map = new HashMap();
-        for (int i : nums1){
-            if (map.containsKey(i)){
-                map.put(i,map.get(i) + 1);
-            }
-            else {
-                map.put(i,1);
-            }
-        }
-        List<Integer> res = new ArrayList();
-        for (int num : nums2){
-            if (map.containsKey(num)){
-                res.add(num);
-                map.put(num,map.get(num) - 1);
-                if (map.get(num) == 0)
-                    map.remove(num);
-            }
-        }
-        int[] arrayRes = new int[res.size()];
-        for (int i = 0; i < res.size(); i++){
-            arrayRes[i] = res.get(i);
-        }
-        return arrayRes;
-
-    }
-
-    public static void main(String[] args) {
-        Solution350.intersect(new int[]{1},new int[]{1});
-    }
 }
